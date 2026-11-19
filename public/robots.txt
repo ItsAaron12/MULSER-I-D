@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://itsaaron12.github.io/MULSER-I-D/sitemap.xml

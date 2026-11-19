@@ -24,7 +24,27 @@ for (const id of ["inicio", "ecosistema", "investigacion", "metodologia", "conta
 }
 check(/<html[^>]*lang="es"/.test(home), "idioma <html lang=\"es\">");
 check(/<h1[ >]/.test(home) && (home.match(/<h1[ >]/g) ?? []).length === 1, "un único <h1>");
-check(/name="robots"[^>]*content="noindex/.test(home), "robots noindex (maqueta no publicada)");
+const publicUrl = "https://itsaaron12.github.io/MULSER-I-D";
+const publishedPages = [join(out, "index.html"), ...slugs.map((slug) => join(out, "proyectos", slug, "index.html"))];
+const noindexMeta = /<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i;
+check(publishedPages.every((file) => !noindexMeta.test(readFileSync(file, "utf8"))),
+  "página principal y seis proyectos sin meta noindex");
+check(home.includes(`href="${publicUrl}/"`), "URL canónica de la portada");
+check(slugs.every((slug) => readFileSync(join(out, "proyectos", slug, "index.html"), "utf8")
+  .includes(`href="${publicUrl}/proyectos/${slug}/"`)), "URLs canónicas de los seis proyectos");
+const sitemapFile = join(out, "sitemap.xml");
+check(existsSync(sitemapFile), "sitemap.xml exportado");
+if (existsSync(sitemapFile)) {
+  const sitemap = readFileSync(sitemapFile, "utf8");
+  const urls = [`${publicUrl}/`, ...slugs.map((slug) => `${publicUrl}/proyectos/${slug}/`)];
+  check(urls.every((url) => sitemap.includes(`<loc>${url}</loc>`)),
+    "sitemap contiene la portada y los seis proyectos");
+}
+const robotsFile = join(out, "robots.txt");
+check(existsSync(robotsFile), "robots.txt exportado en la subruta GitHub Pages");
+if (existsSync(robotsFile)) check(readFileSync(robotsFile, "utf8")
+  .includes(`Sitemap: ${publicUrl}/sitemap.xml`), "robots.txt referencia el sitemap");
+check(existsSync(join(out, "google24d2f5bd3deb8b2d.html")), "verificador de Search Console conservado");
 check(home.includes("skip-link"), "enlace de salto al contenido");
 
 console.log("Recursos externos (solo Cloudflare Web Analytics si está configurado)");
@@ -40,8 +60,11 @@ for (const f of htmlCss) {
 const cfBeacon = "https://static.cloudflareinsights.com/beacon.min.js";
 const cfToken = process.env.CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 const allowed = new Set(cfToken ? [cfBeacon] : []);
-check([...external].every((url) => allowed.has(url)) && (!cfToken || external.has(cfBeacon)),
-  cfToken ? "único recurso externo permitido: beacon de Cloudflare" : "ningún src/href/url() externo");
+const internalPageUrl = `${publicUrl}/`;
+// Las etiquetas <link rel="canonical"> contienen URLs absolutas del propio sitio,
+// no son recursos externos que se descarguen.
+check([...external].every((url) => allowed.has(url) || url.startsWith(internalPageUrl)) && (!cfToken || external.has(cfBeacon)),
+  cfToken ? "solo beacon Cloudflare y URLs canónicas propias" : "ningún recurso externo (solo URLs canónicas propias)");
 if (cfToken) {
   // Solo las páginas de Next.js llevan el beacon; los archivos de verificación
   // de Google son HTML estático y deben conservar su contenido exacto.

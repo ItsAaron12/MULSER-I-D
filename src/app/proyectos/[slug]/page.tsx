@@ -18,7 +18,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = await contentSource.getProject(slug);
-  return project ? { title: project.name, description: project.summary } : {};
+  return project ? {
+    title: project.name,
+    description: project.summary,
+    alternates: { canonical: `https://itsaaron12.github.io/MULSER-I-D/proyectos/${project.slug}/` },
+  } : {};
 }
 
 export default async function ProjectPage({ params }: PageProps) {

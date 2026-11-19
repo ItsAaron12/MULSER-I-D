@@ -12,9 +12,9 @@ export const siteConfig = {
   description:
     "Base tecnológica del ecosistema web institucional de MULSER I+D. Versión de demostración estática.",
   locale: "es",
-  /** LAB01 y LAB02 no están aprobadas para publicación. Ver docs/PUBLICACION.md. */
+  /** Sitio público e indexable; el contenido conserva su aviso editorial de revisión. */
   status: {
-    published: false,
+    published: true,
     label: "Maqueta de revisión",
   },
   cta: { label: "Explorar proyectos", href: "/#ecosistema" },

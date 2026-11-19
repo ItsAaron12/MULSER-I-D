@@ -3,8 +3,8 @@
 Primera base tecnológica del ecosistema web institucional de MULSER I+D. Migración de la maqueta
 `MULSER_ID_WEB_LAB01` (HTML único) a una arquitectura FrontEnd modular, reutilizable y escalable.
 
-> **Estado:** maqueta de revisión, **no aprobada para publicación**. Incluye `noindex`.
-> Ver `docs/PUBLICACION.md`.
+> **Estado:** sitio de demostración público en GitHub Pages, autorizado para indexación.
+> El contenido conserva la etiqueta editorial «Maqueta de revisión»; ver `docs/PUBLICACION.md`.
 
 ## Stack
 

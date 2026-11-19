@@ -18,8 +18,9 @@ const analyticsToken = process.env.CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 export const metadata: Metadata = {
   title: { default: siteConfig.name, template: `%s · ${siteConfig.name}` },
   description: siteConfig.description,
-  // Maqueta no aprobada para publicación: se pide a los buscadores no indexarla.
-  robots: siteConfig.status.published ? undefined : { index: false, follow: false },
+  // La indexación se habilita solo cuando MULSER autoriza la publicación pública.
+  robots: siteConfig.status.published ? { index: true, follow: true } : { index: false, follow: false },
+  alternates: { canonical: "https://itsaaron12.github.io/MULSER-I-D/" },
 };
 
 export const viewport: Viewport = {
