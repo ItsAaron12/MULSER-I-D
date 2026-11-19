@@ -16,7 +16,7 @@ import "./globals.css";
 const analyticsToken = process.env.CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 
 export const metadata: Metadata = {
-  title: { default: `${siteConfig.name} · ${siteConfig.lab}`, template: `%s · ${siteConfig.name}` },
+  title: { default: siteConfig.name, template: `%s · ${siteConfig.name}` },
   description: siteConfig.description,
   // Maqueta no aprobada para publicación: se pide a los buscadores no indexarla.
   robots: siteConfig.status.published ? undefined : { index: false, follow: false },

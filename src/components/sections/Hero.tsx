@@ -6,7 +6,6 @@ import { useRef } from "react";
 import type { CSSProperties } from "react";
 import logo from "@/assets/brand/logo-oficial-mulser-id.png";
 import { baseTransition, motionConfig } from "@/config/motion";
-import { siteConfig } from "@/config/site";
 import { siteContent } from "@/data/site-content";
 import { Button } from "@/components/ui/Button";
 import { ServiceCard } from "@/components/ui/ServiceCard";
@@ -102,13 +101,6 @@ export function Hero({ capabilities }: { capabilities: Service[] }) {
               style={logoFeather}
             />
           </motion.div>
-          <p className="absolute inset-x-4 bottom-4 border border-[rgb(60_104_136/0.45)] bg-[rgb(11_32_54/0.78)] backdrop-blur-md z-20 flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-[0.6875rem] font-semibold text-[#d5e4f2]">
-            <span className="flex items-center gap-2">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-brand shadow-[0_0_9px_var(--brand)]" />
-              {copy.displayCaption}
-            </span>
-            <span className="text-[#ffae4a]">{siteConfig.lab}</span>
-          </p>
         </motion.div>
       </div>
 

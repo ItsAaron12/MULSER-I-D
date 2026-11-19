@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="border-t border-line">
       <div className="container-page flex flex-col gap-3 py-8 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>
-          © {new Date().getFullYear()} {siteConfig.name} · Identidad institucional · {siteConfig.lab}
+          © {new Date().getFullYear()} {siteConfig.name} · Identidad institucional
         </p>
         <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <span>{siteConfig.status.label}</span>
