@@ -9,6 +9,7 @@ export const siteContent = {
     secondaryCta: { label: "Nuestra investigación", href: "#investigacion" },
     points: ["Desarrollo por etapas", "Pruebas en dispositivos reales"],
     logoAlt: "Logotipo oficial MULSER I+D, tres bandas orbitales con cubo luminoso",
+    displayCaption: "Ecosistema MULSER I+D",
   },
   projects: {
     eyebrow: "Un ecosistema, distintas soluciones",

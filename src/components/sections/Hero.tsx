@@ -101,6 +101,12 @@ export function Hero({ capabilities }: { capabilities: Service[] }) {
               style={logoFeather}
             />
           </motion.div>
+          <p className="absolute inset-x-4 bottom-4 z-20 flex items-center rounded-xl border border-[rgb(60_104_136/0.45)] bg-[rgb(11_32_54/0.78)] px-3.5 py-2.5 text-[0.6875rem] font-semibold text-[#d5e4f2] backdrop-blur-md">
+            <span className="flex items-center gap-2">
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-brand shadow-[0_0_9px_var(--brand)]" />
+              {copy.displayCaption}
+            </span>
+          </p>
         </motion.div>
       </div>
 
