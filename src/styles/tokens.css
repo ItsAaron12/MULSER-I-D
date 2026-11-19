@@ -1,0 +1,64 @@
+/*
+ * SISTEMA DE DISEÑO INSTITUCIONAL · MULSER I+D
+ * Única fuente de colores, sombras, radios y fondos. Los componentes consumen estas
+ * variables a través de las utilidades de Tailwind definidas en globals.css (@theme).
+ * Tema oscuro = identidad de LAB01 (por defecto). Tema claro = variante accesible.
+ */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #07111f;
+  --bg-alt: #0a1828;
+  --surface: #0c1d31;
+  --surface-2: #11273d;
+  --line: #29465e;
+  --control: #5f8aa9;
+  --fg: #f1f7fd;
+  --muted: #a6b9ca;
+  --brand: #29dafc;
+  --ember: #ff9c2a;
+  --azure: #317dff;
+  --on-brand: #00152b;
+  --btn-from: #2adcfb;
+  --btn-to: #258af5;
+  --glass-bg: rgb(11 32 54 / 0.72);
+  --glass-line: rgb(60 104 136 / 0.45);
+  --header-bg: rgb(7 20 35 / 0.88);
+  --sh-card: 0 20px 36px rgb(0 0 0 / 0.28);
+  --sh-glow: 0 9px 35px rgb(17 156 243 / 0.28);
+  --sh-panel: 0 30px 80px rgb(0 0 0 / 0.65);
+  --stage-bg: radial-gradient(circle at 50% 45%, #103a56 0, #081524 67%);
+  --orb-1: rgb(43 152 221 / 0.16);
+  --orb-2: rgb(255 154 34 / 0.1);
+  --grid-dot: rgb(108 189 229 / 0.2);
+  --backdrop: rgb(2 11 22 / 0.86);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f7fb;
+  --bg-alt: #e6eef6;
+  --surface: #ffffff;
+  --surface-2: #f0f5fa;
+  --line: #b9cddd;
+  --control: #6a86a0;
+  --fg: #0a1a2a;
+  --muted: #43596c;
+  --brand: #00708f;
+  --ember: #a64b00;
+  --azure: #1f5fd0;
+  --on-brand: #ffffff;
+  --btn-from: #0a7fa0;
+  --btn-to: #1f5fd0;
+  --glass-bg: rgb(255 255 255 / 0.72);
+  --glass-line: rgb(120 155 185 / 0.5);
+  --header-bg: rgb(243 247 251 / 0.9);
+  --sh-card: 0 18px 32px rgb(20 50 80 / 0.14);
+  --sh-glow: 0 9px 30px rgb(31 95 208 / 0.25);
+  --sh-panel: 0 30px 70px rgb(20 50 80 / 0.28);
+  --stage-bg: radial-gradient(circle at 50% 45%, #103a56 0, #081524 67%);
+  --orb-1: rgb(43 152 221 / 0.18);
+  --orb-2: rgb(255 154 34 / 0.14);
+  --grid-dot: rgb(40 100 150 / 0.18);
+  --backdrop: rgb(10 26 42 / 0.6);
+}
