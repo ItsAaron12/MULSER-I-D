@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
+import Image from "next/image";
 import type { CSSProperties, PointerEvent } from "react";
 import { motionConfig } from "@/config/motion";
+import { projectIcons } from "@/config/project-icons";
 import { projectStatusLabels } from "@/data/divisions";
 import { useMotionPreference } from "@/components/providers/MotionProvider";
 import type { Project } from "@/types/content";
@@ -20,6 +22,7 @@ interface ProjectCardProps {
 export function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const { animate } = useMotionPreference();
   const interactive = animate && motionConfig.features.interactiveCards;
+  const projectIcon = projectIcons[project.slug];
 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
     if (!interactive) return;
@@ -49,14 +52,24 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
       <div className="relative flex items-start justify-between gap-3">
         <div
           aria-hidden="true"
-          className="grid size-13 place-items-center rounded-2xl border font-display text-lg font-bold tracking-tight"
+          className="relative grid h-20 w-24 shrink-0 place-items-center overflow-hidden rounded-2xl border border-line bg-surface-2 shadow-sm"
           style={{
-            color: "color-mix(in srgb, var(--tone) 55%, var(--fg))",
-            background: "color-mix(in srgb, var(--tone) 16%, transparent)",
-            borderColor: "color-mix(in srgb, var(--tone) 40%, transparent)",
+            borderColor: "color-mix(in srgb, var(--tone) 40%, var(--line))",
           }}
         >
-          {project.monogram}
+          {projectIcon ? (
+            <Image
+              src={projectIcon}
+              alt=""
+              fill
+              sizes="96px"
+              className="object-contain"
+            />
+          ) : (
+            <span className="font-display text-lg font-bold tracking-tight text-brand">
+              {project.monogram}
+            </span>
+          )}
         </div>
         <span className="rounded-full border border-line bg-surface-2 px-2.5 py-1 text-[0.6875rem] font-semibold text-muted">
           {projectStatusLabels[project.status]}
