@@ -43,7 +43,9 @@ const allowed = new Set(cfToken ? [cfBeacon] : []);
 check([...external].every((url) => allowed.has(url)) && (!cfToken || external.has(cfBeacon)),
   cfToken ? "único recurso externo permitido: beacon de Cloudflare" : "ningún src/href/url() externo");
 if (cfToken) {
-  const pages = files.filter((f) => extname(f) === ".html");
+  // Solo las páginas de Next.js llevan el beacon; los archivos de verificación
+  // de Google son HTML estático y deben conservar su contenido exacto.
+  const pages = [join(out, "index.html"), join(out, "404.html"), ...slugs.map((slug) => join(out, "proyectos", slug, "index.html"))];
   check(pages.every((f) => {
     const html = readFileSync(f, "utf8");
     return html.includes("cloudflare-web-analytics") && html.includes(cfToken);
