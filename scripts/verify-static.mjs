@@ -27,7 +27,7 @@ check(/<h1[ >]/.test(home) && (home.match(/<h1[ >]/g) ?? []).length === 1, "un �
 check(/name="robots"[^>]*content="noindex/.test(home), "robots noindex (maqueta no publicada)");
 check(home.includes("skip-link"), "enlace de salto al contenido");
 
-console.log("Autosuficiencia (sin recursos externos)");
+console.log("Recursos externos (solo Cloudflare Web Analytics si está configurado)");
 const walk = (dir) => readdirSync(dir).flatMap((f) => { const p = join(dir, f); return statSync(p).isDirectory() ? walk(p) : [p]; });
 const files = walk(out);
 const htmlCss = files.filter((f) => [".html", ".css"].includes(extname(f)));
@@ -37,7 +37,20 @@ for (const f of htmlCss) {
   for (const m of text.matchAll(/(?:src|href)="(https?:\/\/[^"]+)"/g)) external.add(m[1]);
   for (const m of text.matchAll(/url\((["']?)(https?:\/\/[^)"']+)\1\)/g)) external.add(m[2]);
 }
-check(external.size === 0, external.size === 0 ? "ningún src/href/url() externo" : `recursos externos: ${[...external].join(", ")}`);
+const cfBeacon = "https://static.cloudflareinsights.com/beacon.min.js";
+const cfToken = process.env.CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
+const allowed = new Set(cfToken ? [cfBeacon] : []);
+check([...external].every((url) => allowed.has(url)) && (!cfToken || external.has(cfBeacon)),
+  cfToken ? "único recurso externo permitido: beacon de Cloudflare" : "ningún src/href/url() externo");
+if (cfToken) {
+  const pages = files.filter((f) => extname(f) === ".html");
+  check(pages.every((f) => {
+    const html = readFileSync(f, "utf8");
+    return html.includes("cloudflare-web-analytics") && html.includes(cfToken);
+  }), "script de analítica configurado en todas las páginas");
+} else {
+  check(!home.includes("cloudflare-web-analytics"), "sin analítica al no haber token");
+}
 check(!files.some((f) => /\.(php|py|db|sqlite)$/.test(f)), "sin archivos de backend ni base de datos");
 check(!files.some((f) => /\.map$/.test(f)), "sin mapas de código fuente");
 

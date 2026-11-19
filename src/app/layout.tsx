@@ -11,6 +11,10 @@ import { PREFERENCES_INIT_SCRIPT } from "@/config/preferences";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
+// Token público de la propiedad de Cloudflare Web Analytics.
+// Se inyecta en build desde GitHub Actions; sin token no se carga el beacon.
+const analyticsToken = process.env.CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
+
 export const metadata: Metadata = {
   title: { default: `${siteConfig.name} · ${siteConfig.lab}`, template: `%s · ${siteConfig.name}` },
   description: siteConfig.description,
@@ -46,6 +50,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <main id="contenido" tabIndex={-1} className="outline-none">
               {children}
             </main>
+            {analyticsToken && process.env.NODE_ENV === "production" && (
+              <Script
+                id="cloudflare-web-analytics"
+                src="https://static.cloudflareinsights.com/beacon.min.js"
+                strategy="afterInteractive"
+                data-cf-beacon={JSON.stringify({ token: analyticsToken, spa: true })}
+              />
+            )}
             <Footer />
           </MotionProvider>
         </ThemeProvider>

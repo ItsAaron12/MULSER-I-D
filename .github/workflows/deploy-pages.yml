@@ -30,6 +30,7 @@ jobs:
       - name: Validar y compilar el sitio estático
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ vars.CLOUDFLARE_WEB_ANALYTICS_TOKEN }}
         run: npm run validate
       - name: Incluir directorios especiales de Next.js
         run: touch out/.nojekyll
@@ -37,7 +38,6 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: out
-          include-hidden-files: true
 
   deploy:
     needs: build
